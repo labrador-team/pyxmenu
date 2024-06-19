@@ -33,8 +33,11 @@ class AttributeName(Enum):
     DISABLED = 'disabled'
 
     @classmethod
-    def _missing_(cls, value):
-        return cls.INVALID
+    def _missing_(cls, value: str):
+        try:
+            return getattr(cls, value.upper())
+        except AttributeError:
+            return cls.INVALID
 
 
 class Attribute(abc.ABC):
